@@ -1,0 +1,49 @@
+:root {
+  --hp-green: #3ed16a;
+  --hp-yellow: #f5c842;
+  --hp-red: #ef4444;
+}
+
+.hp {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 440px;
+  padding: 8px 14px;
+  background: #2b2f3a;
+  border-radius: 999px;
+  color: #fff;
+  font-family: sans-serif;
+}
+
+.hp-label {
+  font-weight: 700;
+  font-size: 12px;
+  color: #f5c842;
+}
+
+.hp-track {
+  position: relative;
+  flex: 1;
+  height: 12px;
+  background: #111;
+  border: 2px solid #555;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.hp-fill,
+.hp-range {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  transition: width 0.3s, left 0.3s, background 0.3s;
+}
+
+.hp-fill { left: 0; }
+.hp-range { opacity: 0.45; }
+
+.hp-text {
+  font-size: 12px;
+  white-space: nowrap;
+}

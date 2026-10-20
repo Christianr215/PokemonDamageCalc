@@ -11,6 +11,8 @@
     "test": "viteset"
   },
   "dependencies": {
+    "@pkmn/data": "^0.10.11",
+    "@pkmn/dex": "^0.10.11",
     "@smogon/calc": "^0.12.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
