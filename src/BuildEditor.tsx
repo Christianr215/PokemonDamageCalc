@@ -1,4 +1,4 @@
-import { speciesNames, itemNames, natureNames, type Build, type Stats } from './damage';
+import { speciesNames, itemNames, natureNames, zeroSp, type Build, type Stats } from './damage';
 
 const STATS: (keyof Stats)[] = ['hp', 'atk', 'def', 'spa', 'spd', 'spe'];
 const MAX_TOTAL = 66;
@@ -26,7 +26,7 @@ export default function BuildEditor({ label, build, onChange }: Props) {
       <input
         list="species-list"
         value={build.species}
-        onChange={(e) => onChange({ ...build, species: e.target.value })}
+        onChange={(e) => onChange({ ...build, species: e.target.value, sp: { ...zeroSp } })}
       />
       <datalist id="species-list">
         {speciesNames.map((n) => <option key={n} value={n} />)}

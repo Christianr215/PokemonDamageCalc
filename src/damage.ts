@@ -40,6 +40,7 @@ export function runCalc(attacker: Build, defender: Build, moveName: string) {
   };
 }
 export type Stats = Build['sp'];
+export const zeroSp: Stats = { hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0 };
 
 export const speciesNames = [...gen.species].map((s) => s.name).sort();
 export const moveNames = [...gen.moves].map((m) => m.name).sort();
