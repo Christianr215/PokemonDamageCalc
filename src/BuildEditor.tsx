@@ -1,4 +1,9 @@
-import { speciesNames, itemNames, natureNames, zeroSp, type Build, type Stats } from './damage';
+import { useState } from 'react';
+import {
+  speciesNames, speciesByLabel, itemNames, natureNames, zeroSp,
+  type Build, type Stats,
+} from './damage';
+import { speciesLabel } from './ChampionsRoster';
 
 const STATS: (keyof Stats)[] = ['hp', 'atk', 'def', 'spa', 'spd', 'spe'];
 const MAX_TOTAL = 66;
@@ -13,10 +18,24 @@ interface Props {
 export default function BuildEditor({ label, build, onChange }: Props) {
   const total = STATS.reduce((sum, s) => sum + build.sp[s], 0);
 
+  // Text being typed. The Pokémon only changes once it matches a real name,
+  // so half-typed words never reset your SP or moves.
+  const [typed, setTyped] = useState<string | null>(null);
+
   const setSp = (stat: keyof Stats, value: number) => {
     const others = total - build.sp[stat];
     const clamped = Math.max(0, Math.min(MAX_PER_STAT, MAX_TOTAL - others, value));
     onChange({ ...build, sp: { ...build.sp, [stat]: clamped } });
+  };
+
+  const onSpeciesInput = (value: string) => {
+    const species = speciesByLabel.get(value.toLowerCase());
+    if (species) {
+      setTyped(null);
+      onChange({ ...build, species, sp: { ...zeroSp } });
+    } else {
+      setTyped(value);
+    }
   };
 
   return (
@@ -25,11 +44,13 @@ export default function BuildEditor({ label, build, onChange }: Props) {
 
       <input
         list="species-list"
-        value={build.species}
-        onChange={(e) => onChange({ ...build, species: e.target.value, sp: { ...zeroSp } })}
+        placeholder="Search Pokémon or form"
+        value={typed ?? speciesLabel(build.species)}
+        onChange={(e) => onSpeciesInput(e.target.value)}
+        onBlur={() => setTyped(null)}
       />
       <datalist id="species-list">
-        {speciesNames.map((n) => <option key={n} value={n} />)}
+        {speciesNames.map((n) => <option key={n} value={speciesLabel(n)} />)}
       </datalist>
 
       <div>

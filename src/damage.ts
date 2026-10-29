@@ -1,4 +1,5 @@
 import { calculate, Generations, Pokemon, Move } from '@smogon/calc';
+import { isChampionsLegal, speciesLabel } from './ChampionsRoster';
 
 export const gen = Generations.get(9);
 
@@ -42,7 +43,17 @@ export function runCalc(attacker: Build, defender: Build, moveName: string) {
 export type Stats = Build['sp'];
 export const zeroSp: Stats = { hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0 };
 
-export const speciesNames = [...gen.species].map((s) => s.name).sort();
+export const speciesNames = [...gen.species]
+  .map((s) => s.name)
+  .filter(isChampionsLegal)
+  .sort();
+
+export const speciesByLabel = new Map<string, string>();
+  for (const n of speciesNames) {
+    speciesByLabel.set(speciesLabel(n).toLowerCase(), n);
+    speciesByLabel.set(n.toLowerCase(), n);
+  }
+
 export const moveNames = [...gen.moves].map((m) => m.name).sort();
 export const itemNames = [...gen.items].map((i) => i.name).sort();
 export const natureNames = [...gen.natures].map((n) => n.name).sort();

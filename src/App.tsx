@@ -153,6 +153,7 @@ export default function App() {
       </div>
       <p style={{ fontSize: 12, opacity: 0.7 }}>
         Unofficial fan project. Pokémon and related names and images are property of Nintendo, Game Freak, and The Pokémon Company.
+        Move usage data courtesy of Pikalytics (pikalytics.com).
       </p>
     </main>
   );
